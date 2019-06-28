@@ -4,7 +4,7 @@ module "api" {
   name     = "api"
 
   global  = false
-  count   = 1
+  num   = 1
   network = "${var.network_name}"
 
   ports                 = ["9021", "8443"]

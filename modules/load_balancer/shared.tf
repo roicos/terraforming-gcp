@@ -12,7 +12,7 @@ resource "google_compute_http_health_check" "lb" {
   healthy_threshold   = "${var.health_check_healthy_threshold}"
   unhealthy_threshold = "${var.health_check_unhealthy_threshold}"
 
-  count = "${var.health_check ? 1 : 0}"
+  num = "${var.health_check ? 1 : 0}"
 }
 
 resource "google_compute_firewall" "health_check" {
@@ -28,7 +28,7 @@ resource "google_compute_firewall" "health_check" {
 
   target_tags = ["${compact(local.target_tags)}"]
 
-  count = "${var.health_check ? 1 : 0}"
+  num = "${var.health_check ? 1 : 0}"
 }
 
 resource "google_compute_firewall" "lb" {
@@ -42,5 +42,5 @@ resource "google_compute_firewall" "lb" {
 
   target_tags = ["${compact(local.target_tags)}"]
 
-  count = "${local.firewall ? 1 : 0}"
+  num = "${local.firewall ? 1 : 0}"
 }

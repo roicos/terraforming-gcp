@@ -52,9 +52,9 @@ resource "google_compute_backend_service" "credhub_backend_service" {
 }
 
 resource "google_compute_instance_group" "uaa_lb" {
-  name  = "${var.env_name}-uaa-lb-${element(var.zones, count.index)}"
-  zone  = "${element(var.zones, count.index)}"
-  count = "${length(var.zones)}"
+  name  = "${var.env_name}-uaa-lb-${element(var.zones, num.index)}"
+  zone  = "${element(var.zones, num.index)}"
+  num = "${length(var.zones)}"
 
   named_port = {
     name = "uaa"
@@ -63,9 +63,9 @@ resource "google_compute_instance_group" "uaa_lb" {
 }
 
 resource "google_compute_instance_group" "credhub_lb" {
-  name  = "${var.env_name}-credhub-lb-${element(var.zones, count.index)}"
-  zone  = "${element(var.zones, count.index)}"
-  count = "${length(var.zones)}"
+  name  = "${var.env_name}-credhub-lb-${element(var.zones, num.index)}"
+  zone  = "${element(var.zones, num.index)}"
+  num = "${length(var.zones)}"
 
   named_port = {
     name = "credhub"
@@ -74,11 +74,11 @@ resource "google_compute_instance_group" "credhub_lb" {
 }
 
 resource "google_compute_global_address" "https_lb_credhub" {
-  name = "${var.env_name}-${count.index}-https-lb-credhub"
+  name = "${var.env_name}-${num.index}-https-lb-credhub"
 }
 
 resource "google_compute_global_address" "https_lb_uaa" {
-  name = "${var.env_name}-${count.index}-https-lb-uaa"
+  name = "${var.env_name}-${num.index}-https-lb-uaa"
 }
 
 resource "google_compute_url_map" "https_lb_url_map" {

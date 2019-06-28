@@ -1,7 +1,7 @@
 resource "random_id" "db-name" {
   byte_length = 8
 
-  count = "${var.create}"
+  num = "${var.create}"
 }
 
 resource "google_sql_database_instance" "master" {
@@ -33,5 +33,5 @@ resource "google_sql_database_instance" "master" {
     }
   }
 
-  count = "${var.create}"
+  num = "${var.create}"
 }

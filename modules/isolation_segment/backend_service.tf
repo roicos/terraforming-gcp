@@ -8,7 +8,7 @@ resource "google_compute_backend_service" "isoseg_lb_backend_service" {
   // Sharing healthcheck with CF because it has the same configuration
   health_checks = ["${var.public_health_check_link}"]
 
-  count = "${var.count}"
+  num = "${var.count}"
 
   backend {
     group = "${google_compute_instance_group.isoseglb.0.self_link}"

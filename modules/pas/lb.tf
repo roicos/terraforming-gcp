@@ -5,7 +5,7 @@ module "ssh-lb" {
   name     = "ssh"
 
   global  = false
-  count   = 1
+  num   = 1
   network = "${var.network}"
 
   ports                 = ["2222"]
@@ -22,7 +22,7 @@ module "gorouter" {
   name     = "gorouter"
 
   global          = "${var.global_lb}"
-  count           = "${var.global_lb > 0 ? 0 : 1}"
+  num           = "${var.global_lb > 0 ? 0 : 1}"
   network         = "${var.network}"
   zones           = "${var.zones}"
   ssl_certificate = "${var.ssl_certificate}"
@@ -49,7 +49,7 @@ module "websocket" {
 
   global  = false
   network = "${var.network}"
-  count   = "${var.global_lb}"
+  num   = "${var.global_lb}"
 
   ports                 = ["80", "443"]
   lb_name               = "${var.env_name}-cf-ws"
@@ -71,7 +71,7 @@ module "tcprouter" {
 
   global  = false
   network = "${var.network}"
-  count   = 1
+  num   = 1
 
   ports                 = ["1024-65535"]
   lb_name               = "${var.env_name}-cf-tcp"

@@ -1,6 +1,6 @@
 // Allow ingress between internal VMs for a PCF deployment
 resource "google_compute_firewall" "cf-internal-ingress" {
-  count = "${var.internetless ? 1 : 0}"
+  num = "${var.internetless ? 1 : 0}"
 
   name    = "${var.env_name}-cf-internal-ingress"
   network = "${var.network}"
@@ -26,7 +26,7 @@ resource "google_compute_firewall" "cf-internal-ingress" {
 
 // Allow egress between internal VMs for a PCF deployment
 resource "google_compute_firewall" "cf-internal-egress" {
-  count = "${var.internetless ? 1 : 0}"
+  num = "${var.internetless ? 1 : 0}"
 
   name    = "${var.env_name}-cf-internal-egress"
   network = "${var.network}"
@@ -52,7 +52,7 @@ resource "google_compute_firewall" "cf-internal-egress" {
 
 // Allow OpsMgr and BOSH Director to talk to GCP APIs, e.g. googleapis.com
 resource "google_compute_firewall" "cf-allow-external-egress" {
-  count = "${var.internetless ? 1 : 0}"
+  num = "${var.internetless ? 1 : 0}"
 
   name    = "${var.env_name}-cf-allow-external-egress"
   network = "${var.network}"
@@ -80,7 +80,7 @@ resource "google_compute_firewall" "cf-allow-external-egress" {
 
 // Deny all outbound internet traffic
 resource "google_compute_firewall" "cf-deny-external-egress" {
-  count = "${var.internetless ? 1 : 0}"
+  num = "${var.internetless ? 1 : 0}"
 
   name    = "${var.env_name}-cf-deny-external-egress"
   network = "${var.network}"

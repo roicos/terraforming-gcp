@@ -7,19 +7,19 @@ resource "google_sql_database" "opsman" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_user.opsman"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "random_id" "opsman_db_username" {
   byte_length = 8
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "random_id" "opsman_db_password" {
   byte_length = 32
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_user" "opsman" {
@@ -28,5 +28,5 @@ resource "google_sql_user" "opsman" {
   instance = "${var.sql_instance}"
   host     = "${var.opsman_sql_db_host}"
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }

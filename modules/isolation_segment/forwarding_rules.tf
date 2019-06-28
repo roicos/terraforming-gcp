@@ -4,7 +4,7 @@ resource "google_compute_global_forwarding_rule" "isoseg-http" {
   target     = "${google_compute_target_http_proxy.isoseg_http_lb_proxy.self_link}"
   port_range = "80"
 
-  count = "${var.count}"
+  num = "${var.count}"
 }
 
 resource "google_compute_global_forwarding_rule" "isoseg-https" {
@@ -13,11 +13,11 @@ resource "google_compute_global_forwarding_rule" "isoseg-https" {
   target     = "${google_compute_target_https_proxy.isoseg_https_lb_proxy.self_link}"
   port_range = "443"
 
-  count = "${var.count}"
+  num = "${var.count}"
 }
 
 resource "google_compute_global_address" "isoseg" {
   name = "${var.env_name}-isoseg"
 
-  count = "${var.count}"
+  num = "${var.count}"
 }

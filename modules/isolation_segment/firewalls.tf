@@ -29,7 +29,7 @@ locals {
 
 /* This firewall allows traffic between VMs in the isolation segment. */
 resource "google_compute_firewall" "isoseg-cf-internal-ingress" {
-  count = "${var.count * var.with_firewalls}"
+  num = "${var.count * var.with_firewalls}"
 
   direction = "INGRESS"
   name      = "${var.env_name}-isoseg-cf-internal-ingress"
@@ -54,7 +54,7 @@ resource "google_compute_firewall" "isoseg-cf-internal-ingress" {
 
 /* This firewall allows traffic on certain ports from cf to the isolation segment. */
 resource "google_compute_firewall" "isoseg-cf-ingress" {
-  count = "${var.count * var.with_firewalls}"
+  num = "${var.count * var.with_firewalls}"
 
   name    = "${var.env_name}-isoseg-cf-ingress"
   network = "${var.network}"
@@ -77,7 +77,7 @@ resource "google_compute_firewall" "isoseg-cf-ingress" {
 
 /* This firewall denies traffic from cf to the isolation segment on all ports. */
 resource "google_compute_firewall" "isoseg-block-cf-ingress" {
-  count = "${var.count * var.with_firewalls}"
+  num = "${var.count * var.with_firewalls}"
 
   name    = "${var.env_name}-isoseg-block-cf-ingress"
   network = "${var.network}"
@@ -102,7 +102,7 @@ resource "google_compute_firewall" "isoseg-block-cf-ingress" {
 
 /* This firewall allows traffic on certain ports from the isolation segment to cf. */
 resource "google_compute_firewall" "cf-isoseg-egress" {
-  count = "${var.count * var.with_firewalls}"
+  num = "${var.count * var.with_firewalls}"
 
   name    = "${var.env_name}-cf-isoseg-egress"
   network = "${var.network}"
@@ -156,7 +156,7 @@ resource "google_compute_firewall" "cf-isoseg-egress" {
 
 /* This firewall denies traffic from the isolation segment to cf on all ports. */
 resource "google_compute_firewall" "cf-block-isoseg-egress" {
-  count = "${var.count* var.with_firewalls}"
+  num = "${var.count* var.with_firewalls}"
 
   name    = "${var.env_name}-cf-block-isoseg-egress"
   network = "${var.network}"

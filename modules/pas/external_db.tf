@@ -9,7 +9,7 @@ resource "google_sql_database" "uaa" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_user.pas"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "ccdb" {
@@ -17,7 +17,7 @@ resource "google_sql_database" "ccdb" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.uaa"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "notifications" {
@@ -25,7 +25,7 @@ resource "google_sql_database" "notifications" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.ccdb"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "autoscale" {
@@ -33,7 +33,7 @@ resource "google_sql_database" "autoscale" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.notifications"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "app_usage_service" {
@@ -41,7 +41,7 @@ resource "google_sql_database" "app_usage_service" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.autoscale"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "console" {
@@ -49,7 +49,7 @@ resource "google_sql_database" "console" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.app_usage_service"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "diego" {
@@ -57,7 +57,7 @@ resource "google_sql_database" "diego" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.console"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "routing" {
@@ -65,7 +65,7 @@ resource "google_sql_database" "routing" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.diego"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "account" {
@@ -73,7 +73,7 @@ resource "google_sql_database" "account" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.routing"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "networkpolicyserver" {
@@ -81,7 +81,7 @@ resource "google_sql_database" "networkpolicyserver" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.account"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "nfsvolume" {
@@ -89,7 +89,7 @@ resource "google_sql_database" "nfsvolume" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.networkpolicyserver"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "silk" {
@@ -97,7 +97,7 @@ resource "google_sql_database" "silk" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.nfsvolume"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "locket" {
@@ -105,7 +105,7 @@ resource "google_sql_database" "locket" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.silk"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_database" "credhub" {
@@ -113,7 +113,7 @@ resource "google_sql_database" "credhub" {
   instance   = "${var.sql_instance}"
   depends_on = ["google_sql_database.locket"]
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 # Users
@@ -121,13 +121,13 @@ resource "google_sql_database" "credhub" {
 resource "random_id" "pas_db_username" {
   byte_length = 8
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "random_id" "pas_db_password" {
   byte_length = 32
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }
 
 resource "google_sql_user" "pas" {
@@ -136,5 +136,5 @@ resource "google_sql_user" "pas" {
   instance = "${var.sql_instance}"
   host     = "${var.pas_sql_db_host}"
 
-  count = "${local.external_db_count}"
+  num = "${local.external_db_count}"
 }

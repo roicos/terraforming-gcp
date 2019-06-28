@@ -18,20 +18,20 @@ resource "google_dns_managed_zone" "default" {
 }
 
 resource "google_service_account" "blobstore" {
-  count = "${var.create_blobstore_service_account_key}"
+  num = "${var.create_blobstore_service_account_key}"
 
   account_id   = "${var.env_name}-blobstore"
   display_name = "${var.env_name} Blobstore Service Account"
 }
 
 resource "google_service_account_key" "blobstore" {
-  count = "${var.create_blobstore_service_account_key}"
+  num = "${var.create_blobstore_service_account_key}"
 
   service_account_id = "${google_service_account.blobstore.id}"
 }
 
 resource "google_project_iam_member" "blobstore_cloud_storage_admin" {
-  count = "${var.create_blobstore_service_account_key}"
+  num = "${var.create_blobstore_service_account_key}"
 
   project = "${var.project}"
   role    = "roles/storage.admin"

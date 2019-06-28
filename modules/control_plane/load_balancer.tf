@@ -5,7 +5,7 @@ module "plane-lb" {
   name     = "plane"
 
   global  = false
-  count   = 1
+  num   = 1
   network = "${var.network}"
 
   ports                 = ["2222", "443"]

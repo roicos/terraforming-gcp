@@ -20,7 +20,7 @@ variable "forwarding_rule_ports" {
   type = "list"
 }
 
-variable "count" {
+variable "num" {
   default = "0"
 }
 

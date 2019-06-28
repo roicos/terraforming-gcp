@@ -106,7 +106,7 @@ module "isoseg_certs" {
 module "isolation_segment" {
   source = "../modules/isolation_segment"
 
-  count = "${var.isolation_segment}"
+  num = "${var.isolation_segment}"
 
   env_name          = "${var.env_name}"
   zones             = "${var.zones}"

@@ -1,5 +1,5 @@
 locals {
-  count = "${var.global ? 1 : 0}"
+  num = "${var.global ? 1 : 0}"
 }
 
 resource "google_compute_backend_service" "http_lb_backend_service" {
@@ -23,21 +23,21 @@ resource "google_compute_backend_service" "http_lb_backend_service" {
 
   health_checks = ["${google_compute_http_health_check.lb.*.self_link}"]
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_instance_group" "httplb" {
-  // Count based on number of AZs
-  count       = "${var.global > 0 ? 3 : 0}"
-  name        = "${var.env_name}-httpslb-${element(var.zones, count.index)}"
+  // num based on number of AZs
+  num       = "${var.global > 0 ? 3 : 0}"
+  name        = "${var.env_name}-httpslb-${element(var.zones, num.index)}"
   description = "terraform generated instance group that is multi-zone for https loadbalancing"
-  zone        = "${element(var.zones, count.index)}"
+  zone        = "${element(var.zones, num.index)}"
 }
 
 resource "google_compute_global_address" "lb" {
   name = "${var.lb_name}"
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_url_map" "https_lb_url_map" {
@@ -45,7 +45,7 @@ resource "google_compute_url_map" "https_lb_url_map" {
 
   default_service = "${google_compute_backend_service.http_lb_backend_service.self_link}"
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_target_http_proxy" "http_lb_proxy" {
@@ -53,7 +53,7 @@ resource "google_compute_target_http_proxy" "http_lb_proxy" {
   description = "really a load balancer but listed as an https proxy"
   url_map     = "${google_compute_url_map.https_lb_url_map.self_link}"
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_target_https_proxy" "https_lb_proxy" {
@@ -62,7 +62,7 @@ resource "google_compute_target_https_proxy" "https_lb_proxy" {
   url_map          = "${google_compute_url_map.https_lb_url_map.self_link}"
   ssl_certificates = ["${var.ssl_certificate}"]
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_global_forwarding_rule" "cf_http" {
@@ -71,7 +71,7 @@ resource "google_compute_global_forwarding_rule" "cf_http" {
   target     = "${google_compute_target_http_proxy.http_lb_proxy.self_link}"
   port_range = "80"
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
 
 resource "google_compute_global_forwarding_rule" "cf_https" {
@@ -80,5 +80,5 @@ resource "google_compute_global_forwarding_rule" "cf_https" {
   target     = "${google_compute_target_https_proxy.https_lb_proxy.self_link}"
   port_range = "443"
 
-  count = "${local.count}"
+  num = "${local.num}"
 }
