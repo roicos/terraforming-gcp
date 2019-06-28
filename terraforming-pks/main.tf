@@ -6,9 +6,9 @@ provider "google" {
   version = "~> 1.20"
 }
 
-terraform {
-  required_version = "< 0.12.0"
-}
+#terraform {
+#  required_version = "< 0.12.0"
+#}
 
 module "infra" {
   source = "../modules/infra"
